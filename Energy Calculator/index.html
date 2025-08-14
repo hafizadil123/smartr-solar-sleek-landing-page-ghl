@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Calculator - 30 Year Projection</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">
+                <span class="title-icon">⚡</span>
+                Energy Calculator
+            </h1>
+            <p class="subtitle">Calculate your electricity costs for the next 30 years</p>
+        </header>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-card">
+                    <h2>Enter Your Energy Data</h2>
+                    <div class="input-group">
+                        <label for="kwh-usage">Monthly Electricity Usage (kWh)</label>
+                        <input type="number" id="kwh-usage" placeholder="e.g., 800" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="price-per-kwh">Current Price per kWh (cents)</label>
+                        <input type="number" id="price-per-kwh" placeholder="e.g., 12.5" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="rate-increase">Annual Rate Increase (%)</label>
+                        <input type="number" id="rate-increase" placeholder="e.g., 3.5" min="0" step="0.1">
+                    </div>
+                    <button id="calculate-btn" class="calculate-btn">
+                        <span class="btn-icon">📊</span>
+                        Calculate Savings
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-section" id="results-section" style="display: none;">
+                <div class="results-card">
+                    <h2>30-Year Energy Cost Projection</h2>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-cost">$0</div>
+                            <div class="stat-label">Total 30-Year Cost</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="avg-yearly">$0</div>
+                            <div class="stat-label">Average Yearly Cost</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="final-year">$0</div>
+                            <div class="stat-label">Final Year Cost</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

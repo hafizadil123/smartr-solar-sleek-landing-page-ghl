@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartr Solar - Free Solar Installation in DC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script>
+        // Ensure Lottie player is loaded and working
+        window.addEventListener('load', function () {
+            console.log('Page loaded, checking Lottie player...');
+
+            // Check if Lottie player element exists
+            const lottiePlayers = document.querySelectorAll('lottie-player');
+            console.log('Found Lottie players:', lottiePlayers.length);
+
+            if (lottiePlayers.length > 0) {
+                lottiePlayers.forEach((player, index) => {
+                    console.log(`Lottie player ${index + 1}:`, player);
+                    console.log(`Source:`, player.src);
+
+                    // Add event listeners for debugging
+                    player.addEventListener('load', () => console.log(`Player ${index + 1} loaded successfully`));
+                    player.addEventListener('error', (e) => console.error(`Player ${index + 1} error:`, e));
+                });
+            }
+
+            // Check if Lottie library is available
+            if (typeof lottie === 'undefined') {
+                console.error('Lottie library not available');
+            } else {
+                console.log('Lottie library is available');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="Stacked_Solar_GreenBlue (2).png" alt="Smartr Solar" class="logo-image"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="logo-text" style="display: none; color: white; font-size: 24px; font-weight: 700;">Smartr
+                    Solar</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Last Chance: Lock-in 20-30 Years of
+                        <span class="highlight">Free Solar</span>
+                        Before the 2027 Deadline!
+                    </h1>
+                    <div class="location-badge">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ATTENTION WASHINGTON, D.C. HOMEOWNERS & LANDLORDS
+                    </div>
+                    <div class="hero-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Free Solar enables homeowners and landlords to get 20-30 years of free
+                                electricity</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>The average homeowner will save $180,911 over the next 25 years</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Recently Congress passed Trump's "Big Beautiful Bill Act"</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>This legislation will take away the tax break that makes Free Solar in DC
+                                possible</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-cta">
+                    <button class="apply-now-btn" onclick="startApplication()">
+                        <i class="fas fa-rocket"></i>
+                        Apply Now To See If Your Home or Rental Property Qualifies
+                    </button>
+                    <p class="cta-subtext">Fill in Our Short 30-Second Application Now!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">
+                Wondering how we're able to install solar for you that costs <em>literally $0</em> ever?
+            </h2>
+            <p class="section-subtitle">Here's how it works:</p>
+
+            <div class="how-it-works-content">
+                <div class="hero-images-container">
+                    <div class="hero-image">
+                        <img src="DC rooftop A.jpg" alt="DC Rooftop Solar Installation">
+                    </div>
+                    <div class="hero-image">
+                        <img src="DC rooftop C.png" alt="DC Rooftop Solar Installation C">
+                    </div>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-solar-panel"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>D.C. Solar Incentives</h3>
+                            <p>DC lawmakers know solar is a huge win for the environment, so they've committed to
+                                powering the entire city with renewable energy by 2032.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Pepco's Renewable Mandate</h3>
+                            <p>Pepco pays major penalties if they don't source enough renewable power. It's cheaper for
+                                Pepco to pay property owners to install solar.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Free Solar Lease</h3>
+                            <p>Qualifying property owners can lease their systems for free, giving them free electricity
+                                for the next 20-30 years for literally $0 cost ever.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Full Warranty Coverage</h3>
+                            <p>All Free Solar power systems are warrantied for the full term of the lease, so you'll get
+                                your system repaired for free if any components ever break. We also warranty any
+                                necessary roof work for 5 years after the installation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solar Process Timeline Section -->
+    <section class="solar-process">
+        <div class="container">
+            <div class="process-timeline">
+                <!-- Timeline Line -->
+                <div class="timeline-line">
+                    <div class="timeline-node"></div>
+                </div>
+
+                <!-- Step 1: Application & Assessment -->
+                <div class="process-step step-1">
+                    <div class="step-content">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Submit Your Application</h3>
+                        <p class="step-description">We'll take a look at the shading and orientation of your roof to
+                            determine if it receives adequate sunlight for optimal solar production.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <div class="roof-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="sun-analysis">
+                                <div class="sun-ray"></div>
+                                <div class="sun-ray"></div>
+                                <div class="sun-ray"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Qualification & Planning -->
+                <div class="process-step step-2">
+                    <div class="step-content">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Property Qualification & Planning</h3>
+                        <p class="step-description">If your property qualifies for the program, we'll set up a call to
+                            review the details of how much solar your particular property would produce and what your
+                            estimated savings will be.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <div class="qualification-check">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="savings-preview">
+                                <div class="savings-bar"></div>
+                                <div class="savings-bar"></div>
+                                <div class="savings-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Installation & Completion -->
+                <div class="process-step step-3">
+                    <div class="step-content">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Site Survey & Installation</h3>
+                        <p class="step-description">Then we'll set up a site survey to come out and do a final review of
+                            your roof. If everything looks good, we'll file for permits and you'll get your Free Solar
+                            system installed within 5-6 months.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <div class="installation-icon">
+                                <i class="fas fa-solar-panel"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="process-cta">
+                <button class="start-solar-btn" onclick="startApplication()">
+                    Start Your Solar Journey
+                </button>
+                <p class="cta-subtitle">Free Solar System • No Upfront Costs • 5-6 Month Timeline</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">But don't take our word for it - hear what our customers have to say.</h2>
+            <!-- Elfsight Google Reviews | Smartr Solar Google Reviews -->
+            <script src="https://static.elfsight.com/platform/platform.js" async></script>
+            <div class="elfsight-app-3f302549-6f4e-41ee-bb08-b5bedb3a4410" data-elfsight-app-lazy></div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency">
+        <div class="container">
+            <div class="urgency-content">
+                <h2 class="urgency-title">And DON'T DELAY!</h2>
+                <p class="urgency-subtitle">DC's Free Solar Program is going away, so you've got to act now!</p>
+                <div class="cta-buttons">
+                    <button class="cta-primary" onclick="startApplication()">
+                        <i class="fas fa-rocket"></i>
+                        Apply Now To See If Your Home or Rental Property Qualifies
+                    </button>
+                    <p class="cta-subtext">Fill in Our Short 30-Second Application Now!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Energy Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-header">
+                <h2 class="calculator-title">
+                    <span class="title-icon">⚡</span>
+                    Energy Calculator
+                </h2>
+                <p class="calculator-subtitle">Calculate your electricity costs for the next 30 years</p>
+            </div>
+
+            <div class="calculator-main">
+                <div class="calculator-input-section">
+                    <div class="input-card">
+                        <h3>Enter Your Energy Data</h3>
+                        <div class="input-group">
+                            <label for="monthly-usage">Monthly Electricity Usage (kWh)</label>
+                            <input type="number" id="monthly-usage" placeholder="e.g., 800" min="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="price-per-kwh">Current Price per kWh (cents)</label>
+                            <input type="number" id="price-per-kwh" placeholder="e.g., 19.0" min="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="rate-increase">Annual Rate Increase (%)</label>
+                            <input type="number" id="rate-increase" placeholder="e.g., 7.0" min="0" step="0.1">
+                        </div>
+                        <button class="calculate-btn" id="calculate-btn">
+                            <span class="btn-icon">📊</span>
+                            Calculate Savings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="calculator-results-section" id="calculator-results-section" style="display: none;">
+                    <div class="results-card">
+                        <h3>30-Year Energy Cost Projection</h3>
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-cost">$0</div>
+                                <div class="stat-label">Total 30-Year Cost</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="avg-yearly">$0</div>
+                                <div class="stat-label">Average Yearly Cost</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="final-year">$0</div>
+                                <div class="stat-label">Final Year Cost</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="energyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Say Goodbye to Electric Bills Section -->
+    <section class="goodbye-bills">
+        <div class="container">
+            <div class="goodbye-content">
+                <div class="bill-animation-container">
+                    <div class="pepco-bill">
+                        <lottie-player src="paper-rip-3.json" background="transparent" speed="1"
+                            style="width: 1800px; height: 1800px;" loop autoplay></lottie-player>
+                    </div>
+                </div>
+                <div class="goodbye-text">
+                    <!-- <h2 class="goodbye-title">Say Goodbye to Your Electric Bill</h2> -->
+                    <p class="goodbye-subtitle">With Free Solar, you'll never pay another electricity bill again</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <button class="final-cta-btn" onclick="startApplication()">
+                <i class="fas fa-rocket"></i>
+                Apply Now To See If Your Home or Rental Property Qualifies
+            </button>
+            <p class="final-cta-subtext">Fill in Our Short 30-Second Application Now!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="logo">
+                <img src="Stacked_Solar_GreenBlue (2).png" alt="Smartr Solar" class="logo-image">
+            </div>
+            <p class="disclaimer">
+                *Not all properties qualify for Free Solar. Qualification depends on a variety of factors like the size
+                and condition of your property's roof. Some homes also qualify for a free roof replacement or an "at
+                cost" roof replacement. We estimate that the average property owner in DC can make an extra $180,911+
+                over the next 25 years for free with our Free Solar Lease program. Free Solar may no longer be available
+                prior to 2027 as demand is increasing rapidly and install pipelines are limited. Apply now for the best
+                chance of qualification. Returns are not guaranteed.
+            </p>
+            <div class="footer-links">
+                <a href="https://www.smartrsolar.com" target="_blank">www.smartrsolar.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Multi-Step Application Questionnaire -->
+    <div id="application-overlay" class="application-overlay">
+        <div class="application-modal">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-left">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">Step 1 of 6</span>
+                </div>
+                <button class="close-btn" id="close-application">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Question Steps -->
+            <div class="question-container">
+                <!-- Step 1: Property Type -->
+                <div class="question-step active" id="step-1">
+                    <h2 class="question-title">Are you a Landlord or a Homeowner?*</h2>
+                    <div class="options-grid">
+                        <button class="option-btn" data-value="homeowner" data-next="step-2">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Homeowner</span>
+                        </button>
+                        <button class="option-btn" data-value="landlord" data-next="step-2">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Landlord</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Address -->
+                <div class="question-step" id="step-2">
+                    <h2 class="question-title" id="address-question">What is your home address?</h2>
+                    <div class="input-container">
+                        <input type="text" id="address-input" placeholder="Enter your address" class="question-input">
+                        <button class="next-btn" data-next="step-3">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: First Name -->
+                <div class="question-step" id="step-3">
+                    <h2 class="question-title">What is your first name?*</h2>
+                    <div class="input-container">
+                        <input type="text" id="first-name-input" placeholder="Enter your first name"
+                            class="question-input">
+                        <button class="next-btn" data-next="step-4">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Last Name -->
+                <div class="question-step" id="step-4">
+                    <h2 class="question-title">What is your last name?*</h2>
+                    <div class="input-container">
+                        <input type="text" id="last-name-input" placeholder="Enter your last name"
+                            class="question-input">
+                        <button class="next-btn" data-next="step-5">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Email -->
+                <div class="question-step" id="step-5">
+                    <h2 class="question-title">What is your email address?</h2>
+                    <div class="input-container">
+                        <input type="email" id="email-input" placeholder="Enter your email address"
+                            class="question-input">
+                        <button class="next-btn" data-next="step-6">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Phone -->
+                <div class="question-step" id="step-6">
+                    <h2 class="question-title">What is your phone number?*</h2>
+                    <div class="input-container">
+                        <input type="tel" id="phone-input" placeholder="Enter your phone number" class="question-input">
+                        <button class="submit-btn" id="submit-application">Submit Application</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
