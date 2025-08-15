@@ -1,47 +1,29 @@
-function handleLottieError(player) {
-    console.error('Lottie animation failed to load:', player.src);
 
-    const animationFiles = ['ripped.json','paper-rip-1.json', 'paper-rip-2.json', 'paper-rip-3.json'];
-    const currentSrc = player.src;
-    const currentFile = currentSrc.split('/').pop();
-    const currentIndex = animationFiles.indexOf(currentFile);
 
-    if (currentIndex < animationFiles.length - 1) {
-        const nextFile = animationFiles[currentIndex + 1];
-        console.log('Trying next animation file:', nextFile);
-        player.src = nextFile;
-        return;
-    }
-
-    console.log('All animation files failed, showing fallback bill image');
-    player.style.display = 'none';
-    const fallbackBill = player.parentElement.querySelector('.fallback-bill');
-    if (fallbackBill) {
-        fallbackBill.style.display = 'block';
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
+// Energy Calculator Functionality
+document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculate-btn');
     const calculatorResultsSection = document.getElementById('calculator-results-section');
-
+    
     if (calculateBtn) {
         calculateBtn.addEventListener('click', calculateEnergyCosts);
     }
-
+    
+    // Add some sample data for demonstration
     const monthlyUsageInput = document.getElementById('monthly-usage');
     const pricePerKwhInput = document.getElementById('price-per-kwh');
     const rateIncreaseInput = document.getElementById('rate-increase');
-
+    
     if (monthlyUsageInput && pricePerKwhInput && rateIncreaseInput) {
         monthlyUsageInput.value = '800';
         pricePerKwhInput.value = '19.0';
         rateIncreaseInput.value = '7.0';
     }
-
+    
+    // Smooth scrolling for anchor links
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     anchorLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
@@ -53,13 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
+    
+    // Add scroll animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-
-    const observer = new IntersectionObserver(function (entries) {
+    
+    const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -67,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }, observerOptions);
-
+    
+    // Observe elements for animation
     const animateElements = document.querySelectorAll('.process-card, .testimonial-card, .benefit-item');
     animateElements.forEach(el => {
         el.style.opacity = '0';
@@ -75,14 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
-
+    
+    // Add calculator input validation and real-time feedback
     const calculatorInputs = [monthlyUsageInput, pricePerKwhInput, rateIncreaseInput];
-
+    
     calculatorInputs.forEach(input => {
         if (input) {
             input.addEventListener('input', () => {
                 if (input.value && !isNaN(input.value) && parseFloat(input.value) >= 0) {
-                    input.style.borderColor = '#59b7c9';
+                    input.style.borderColor = '#59b7c9'; // Brand color
                 } else {
                     input.style.borderColor = '#e1e5e9';
                 }
@@ -90,22 +75,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Add keyboard support for calculator
     document.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && (e.target.id === 'monthly-usage' || e.target.id === 'price-per-kwh' || e.target.id === 'rate-increase')) {
             calculateEnergyCosts();
         }
     });
-
+    
+    // Add questionnaire event listeners
     setupQuestionnaire();
 });
 
+// Global variables
 let energyChart = null;
 
+// Main calculation function
 function calculateEnergyCosts() {
+    // Get input values
     const monthlyKwh = parseFloat(document.getElementById('monthly-usage').value);
     const pricePerKwh = parseFloat(document.getElementById('price-per-kwh').value);
     const annualRateIncrease = parseFloat(document.getElementById('rate-increase').value);
 
+    // Validate inputs
     if (!monthlyKwh || !pricePerKwh || !annualRateIncrease) {
         alert('Please fill in all fields with valid numbers.');
         return;
@@ -116,15 +107,19 @@ function calculateEnergyCosts() {
         return;
     }
 
+    // Calculate 30-year projection
     const projection = calculateProjection(monthlyKwh, pricePerKwh, annualRateIncrease);
-
+    
+    // Display results
     displayResults(projection);
-
+    
+    // Show results section with animation
     const resultsSection = document.getElementById('calculator-results-section');
     resultsSection.style.display = 'block';
     resultsSection.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Calculate 30-year energy cost projection
 function calculateProjection(monthlyKwh, pricePerKwh, annualRateIncrease) {
     const years = [];
     const costs = [];
@@ -135,15 +130,16 @@ function calculateProjection(monthlyKwh, pricePerKwh, annualRateIncrease) {
     for (let year = 0; year < 30; year++) {
         const currentYear = 2025 + year;
         const yearlyKwh = monthlyKwh * 12;
-        const yearlyCost = yearlyKwh * currentPrice / 100;
-
+        const yearlyCost = yearlyKwh * currentPrice / 100; // Convert cents to dollars
+        
         years.push(currentYear);
         costs.push(yearlyCost);
         prices.push(currentPrice);
-
+        
         totalCost += yearlyCost;
-
-        currentPrice *= (1 + annualRateIncrease / 100);
+        
+        // Increase price for next year (linear growth pattern)
+        currentPrice = pricePerKwh * (1 + (annualRateIncrease / 100) * (year + 1));
     }
 
     return {
@@ -156,28 +152,35 @@ function calculateProjection(monthlyKwh, pricePerKwh, annualRateIncrease) {
     };
 }
 
+// Display results and create chart
 function displayResults(projection) {
+    // Update summary statistics
     document.getElementById('total-cost').textContent = formatCurrency(projection.totalCost);
     document.getElementById('avg-yearly').textContent = formatCurrency(projection.averageYearly);
     document.getElementById('final-year').textContent = formatCurrency(projection.finalYearCost);
 
+    // Create or update chart
     createChart(projection);
 }
 
+// Create beautiful chart using Chart.js
 function createChart(projection) {
     const ctx = document.getElementById('energyChart').getContext('2d');
-
+    
+    // Destroy existing chart if it exists
     if (energyChart) {
         energyChart.destroy();
     }
 
+    // Prepare data for chart
     const labels = projection.years.map(year => year.toString());
     const costData = projection.costs;
-    const priceData = projection.prices.map(price => price / 10);
+    const priceData = projection.prices.map(price => price / 10); // Scale down for better visualization
 
+    // Create gradient for bars using brand colors
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(89, 183, 201, 0.8)');
-    gradient.addColorStop(1, 'rgba(16, 58, 59, 0.6)');
+    gradient.addColorStop(0, 'rgba(89, 183, 201, 0.8)'); // #59b7c9
+    gradient.addColorStop(1, 'rgba(16, 58, 59, 0.6)'); // #103a3b
 
     energyChart = new Chart(ctx, {
         type: 'bar',
@@ -187,7 +190,7 @@ function createChart(projection) {
                 label: 'Annual Energy Cost ($)',
                 data: costData,
                 backgroundColor: gradient,
-                borderColor: 'rgba(89, 183, 201, 1)',
+                borderColor: 'rgba(89, 183, 201, 1)', // #59b7c9
                 borderWidth: 1,
                 borderRadius: 8,
                 borderSkipped: false,
@@ -201,7 +204,7 @@ function createChart(projection) {
                     display: true,
                     position: 'top',
                     labels: {
-                        color: '#103a3b',
+                        color: '#103a3b', // Brand color
                         font: {
                             family: 'Inter',
                             size: 12,
@@ -211,15 +214,15 @@ function createChart(projection) {
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(242, 235, 225, 0.95)',
-                    titleColor: '#103a3b',
-                    bodyColor: '#103a3b',
-                    borderColor: '#59b7c9',
+                    backgroundColor: 'rgba(242, 235, 225, 0.95)', // #f2ebe1
+                    titleColor: '#103a3b', // Brand color
+                    bodyColor: '#103a3b', // Brand color
+                    borderColor: '#59b7c9', // Brand color
                     borderWidth: 1,
                     cornerRadius: 8,
                     displayColors: false,
                     callbacks: {
-                        label: function (context) {
+                        label: function(context) {
                             const year = projection.years[context.dataIndex];
                             const cost = context.parsed.y;
                             const price = projection.prices[context.dataIndex];
@@ -238,7 +241,7 @@ function createChart(projection) {
                         display: false
                     },
                     ticks: {
-                        color: '#103a3b',
+                        color: '#103a3b', // Brand color
                         font: {
                             family: 'Inter',
                             size: 10
@@ -249,7 +252,7 @@ function createChart(projection) {
                     title: {
                         display: true,
                         text: 'Year',
-                        color: '#103a3b',
+                        color: '#103a3b', // Brand color
                         font: {
                             family: 'Inter',
                             size: 14,
@@ -259,23 +262,23 @@ function createChart(projection) {
                 },
                 y: {
                     grid: {
-                        color: 'rgba(16, 58, 59, 0.1)',
+                        color: 'rgba(16, 58, 59, 0.1)', // Brand color with opacity
                         drawBorder: false
                     },
                     ticks: {
-                        color: '#103a3b',
+                        color: '#103a3b', // Brand color
                         font: {
                             family: 'Inter',
                             size: 10
                         },
-                        callback: function (value) {
+                        callback: function(value) {
                             return '$' + value.toLocaleString();
                         }
                     },
                     title: {
                         display: true,
                         text: 'Annual Energy Cost ($)',
-                        color: '#103a3b',
+                        color: '#103a3b', // Brand color
                         font: {
                             family: 'Inter',
                             size: 14,
@@ -287,7 +290,8 @@ function createChart(projection) {
             animation: {
                 duration: 2000,
                 easing: 'easeInOutQuart',
-                onProgress: function (animation) {
+                onProgress: function(animation) {
+                    // Add some visual feedback during animation
                     const progress = animation.currentStep / animation.numSteps;
                     if (progress > 0.5) {
                         document.querySelector('.chart-container').style.opacity = '1';
@@ -301,19 +305,22 @@ function createChart(projection) {
         }
     });
 
+    // Add some visual enhancements
     addChartEnhancements();
 }
 
+// Add visual enhancements to the chart
 function addChartEnhancements() {
     const chartContainer = document.querySelector('.chart-container');
     chartContainer.style.opacity = '0';
     chartContainer.style.transition = 'opacity 0.5s ease-in-out';
-
+    
     setTimeout(() => {
         chartContainer.style.opacity = '1';
     }, 100);
 }
 
+// Format currency for display
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -322,6 +329,10 @@ function formatCurrency(amount) {
         maximumFractionDigits: 0
     }).format(amount);
 }
+
+
+
+
 
 function scrollToForm() {
     const form = document.querySelector('.hero-form');
@@ -333,6 +344,9 @@ function scrollToForm() {
     }
 }
 
+
+
+// Add smooth scrolling behavior
 document.documentElement.style.scrollBehavior = 'smooth';
 
 document.addEventListener('DOMContentLoaded', function () {
